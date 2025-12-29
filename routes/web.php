@@ -60,6 +60,22 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 
 });
+Route::middleware(['auth', 'role:superadmin'])->prefix('superadmin')->group(function () {
+    // 1. Tambahkan route untuk menampilkan daftar produk
+    Route::get('/products', [ProductController::class, 'index'])->name('superadmin.index');
+    // 2. Tambahkan route untuk menampilkan form tambah produk
+    Route::get('/products/create', [ProductController::class, 'create'])->name('superadmin.create');
+    // 3. Tambahkan route untuk menyimpan produk baru
+    Route::post('/products', [ProductController::class, 'store'])->name('superadmin.store');
+    // 4. Tambahkan route untuk menampilkan form edit produk
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('superadmin.edit');
+    // 5. Tambahkan route untuk menyimpan perubahan produk
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('superadmin.update');
+    // 6. Tambahkan route untuk menghapus produk
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('superadmin.destroy');
+
+
+});
 Route::middleware(['auth','role:mahasiswa'])->group(function() {
      Route::get('/categories', [HomeController::class, 'categories'])->name('categories.index');
     Route::get('/categories/{category}', [HomeController::class, 'categoryProducts'])->name('categories.products');
